@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="82ca5851-48dc-48f7-aff6-826a3d520946" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="G:\Program Files\IntelliJ IDEA Community Edition 2020.1.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hHgSUpGFYwzCJovdFsPcr9mlaf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Refrenced/chess-apolo50" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunManager">
+    <configuration name="JTic" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ticTac.JTic" />
+      <module name="ticTacNew" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ticTac.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.JTic" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="82ca5851-48dc-48f7-aff6-826a3d520946" name="Default Changelist" comment="" />
+      <created>1599673431544</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599673431544</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="410" y="208" key="#com.intellij.ide.util.MemberChooser" timestamp="1599745537874">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="410" y="208" key="#com.intellij.ide.util.MemberChooser/0.0.1280.984@0.0.1280.984" timestamp="1599745537874" />
+    <state x="237" y="233" key="FileChooserDialogImpl" timestamp="1599744412248">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="237" y="233" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1599744412248" />
+    <state width="1239" height="264" key="GridCell.Tab.0.bottom" timestamp="1599747391764">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1239" height="264" key="GridCell.Tab.0.bottom/0.0.1280.984@0.0.1280.984" timestamp="1599747391764" />
+    <state width="1239" height="264" key="GridCell.Tab.0.center" timestamp="1599747391764">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1239" height="264" key="GridCell.Tab.0.center/0.0.1280.984@0.0.1280.984" timestamp="1599747391764" />
+    <state width="1239" height="264" key="GridCell.Tab.0.left" timestamp="1599747391764">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1239" height="264" key="GridCell.Tab.0.left/0.0.1280.984@0.0.1280.984" timestamp="1599747391764" />
+    <state width="1239" height="264" key="GridCell.Tab.0.right" timestamp="1599747391764">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="1239" height="264" key="GridCell.Tab.0.right/0.0.1280.984@0.0.1280.984" timestamp="1599747391764" />
+    <state x="120" y="66" key="SettingsEditor" timestamp="1599676151137">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="120" y="66" key="SettingsEditor/0.0.1280.984@0.0.1280.984" timestamp="1599676151137" />
+    <state x="402" y="239" key="refactoring.ChangeSignatureDialog" timestamp="1599686142092">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="402" y="239" key="refactoring.ChangeSignatureDialog/0.0.1280.984@0.0.1280.984" timestamp="1599686142092" />
+    <state x="296" y="226" key="run.anything.popup" timestamp="1599691966881">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="296" y="226" key="run.anything.popup/0.0.1280.984@0.0.1280.984" timestamp="1599691966881" />
+  </component>
+</project>
