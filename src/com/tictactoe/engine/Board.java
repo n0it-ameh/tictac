@@ -11,8 +11,6 @@ import java.util.List;
 
 import static com.tictactoe.engine.BoardUtils.isValid;
 import static com.tictactoe.engine.Tile.EMPTY_TILE_CACHE;
-import static com.tictactoe.engine.Tile.O_BIASED_TILE_CACHE;
-import static com.tictactoe.engine.Tile.X_BIASED_TILE_CACHE;
 
 public class Board {
 
@@ -21,6 +19,10 @@ public class Board {
 
     public static Board create(final int tileCoordX, final int tileCoordY, final Tile tile){
         return new Board(tileCoordX, tileCoordY, tile);
+    }
+
+    public Tile get(final int tileCoordX, final int tileCoordY){
+        return this.board.get(tileCoordX, tileCoordY);
     }
 
     public static boolean hasEmptyTiles(Board board){
