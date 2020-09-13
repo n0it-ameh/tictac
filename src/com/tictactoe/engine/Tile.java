@@ -8,11 +8,19 @@ import com.google.common.collect.Table;
 import java.util.*;
 
 public abstract class Tile {
+    public final int getTileCoordX(final Tile tile) {
+        return tile.tileCoordX;
+    }
+
+    public final int getTileCoordY(final Tile tile) {
+        return tile.tileCoordY;
+    }
+
     protected final int tileCoordX;
     protected final int tileCoordY;
-    private static final Table<Integer, Integer, Tile> EMPTY_TILE_CACHE = createAllPossibleEmptyTiles();
-    private static final Table<Integer, Integer, Tile> X_BIASED_TILE_CACHE = createAllPossibleXTiles();
-    private static final Table<Integer, Integer, Tile> O_BIASED_TILE_CACHE = createAllPossibleOTiles();
+    public static final Table<Integer, Integer, Tile> EMPTY_TILE_CACHE = createAllPossibleEmptyTiles();
+    public static final Table<Integer, Integer, Tile> X_BIASED_TILE_CACHE = createAllPossibleXTiles();
+    public static final Table<Integer, Integer, Tile> O_BIASED_TILE_CACHE = createAllPossibleOTiles();
 
     protected Tile(final int tileCoordX, final int tileCoordY) {
         this.tileCoordX = tileCoordX;
