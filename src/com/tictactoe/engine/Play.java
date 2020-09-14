@@ -1,17 +1,22 @@
 package com.tictactoe.engine;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Table;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static com.tictactoe.engine.BoardUtils.isValid;
 import static com.tictactoe.engine.Tile.O_BIASED_TILE_CACHE;
 import static com.tictactoe.engine.Tile.X_BIASED_TILE_CACHE;
 
 public class Play {
     private final Table<Integer, Integer, Tile> board;
-    private final Tile tile;
-    private final int destinationCoordX;
-    private final int destinationCoordY;
+    protected final Tile tile;
+    protected final int destinationCoordX;
+    protected final int destinationCoordY;
 
     private Play(final Table<Integer, Integer, Tile> board, final Tile tile,
                  final int destinationCoordX, final int destinationCoordY) {
@@ -19,18 +24,6 @@ public class Play {
         this.tile = tile;
         this.destinationCoordX = destinationCoordX;
         this.destinationCoordY = destinationCoordY;
-    }
-
-    public static Play create(final Board board, final Tile tile,
-                              final int destinationCoordX,
-                              final int destinationCoordY){
-        final Table<Integer, Integer, Tile> table = HashBasedTable.create();
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                table.put(i, j, board.get(i, j));
-            }
-        }
-        return new Play(table, tile, destinationCoordX, destinationCoordY);
     }
 
     @Override
@@ -48,19 +41,20 @@ public class Play {
         return builder.toString();
     }
 
-
-    public Table<Integer, Integer, Tile> makePlay(){
-        final Table<Integer, Integer, Tile> playBoard = HashBasedTable.create();
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                playBoard.put(i, j, board.get(i, j));
-            }
-        }
-        return ImmutableTable.copyOf(playBoard);
-    }
-
    public Tile get(final int tileCoordX, final int tileCoordY){
         return this.board.get(tileCoordX, tileCoordY);
+   }
+
+   public Collection<Play> getXLegalPlays(Board board){
+        final List<Play> legalPlays = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(!this.board.get(i, j).isTileBiased()){
+                    legalPlays.add(playX(board, i, j));
+                }
+            }
+        }
+        return ImmutableList.copyOf(legalPlays);
    }
 
     public static Play playX(final Play play,
@@ -71,6 +65,11 @@ public class Play {
             for(int j = 0; j < 3; j++){
                 final Tile tile = play.get(i, j);
                 tileMap.put(i, j, tile);
+            }
+            if(isValid(destinationCoordX, destinationCoordY)){
+                tileMap.put(destinationCoordX, destinationCoordY,
+                        X_BIASED_TILE_CACHE.get(destinationCoordX,
+                        destinationCoordY));
             }
         }
         return new Play(tileMap, X_BIASED_TILE_CACHE.get(destinationCoordX,
@@ -85,6 +84,49 @@ public class Play {
             for(int j = 0; j < 3; j++){
                 final Tile tile = play.get(i, j);
                 tileMap.put(i, j, tile);
+            }
+            if(isValid(destinationCoordX, destinationCoordY)){
+                tileMap.put(destinationCoordX, destinationCoordY,
+                        O_BIASED_TILE_CACHE.get(destinationCoordX,
+                        destinationCoordY));
+            }
+        }
+        return new Play(tileMap, O_BIASED_TILE_CACHE.get(destinationCoordX,
+                destinationCoordY), destinationCoordX, destinationCoordY);
+    }
+
+    public static Play playX(final Board board,
+                             final int destinationCoordX,
+                             final int destinationCoordY){
+        final Table<Integer, Integer, Tile> tileMap = HashBasedTable.create();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                final Tile tile = board.get(i, j);
+                tileMap.put(i, j, tile);
+            }
+            if(isValid(destinationCoordX, destinationCoordY)){
+                tileMap.put(destinationCoordX, destinationCoordY,
+                        X_BIASED_TILE_CACHE.get(destinationCoordX,
+                                destinationCoordY));
+            }
+        }
+        return new Play(tileMap, X_BIASED_TILE_CACHE.get(destinationCoordX,
+                destinationCoordY), destinationCoordX, destinationCoordY);
+    }
+
+    public static Play playO(final Board board,
+                             final int destinationCoordX,
+                             final int destinationCoordY){
+        final Table<Integer, Integer, Tile> tileMap = HashBasedTable.create();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                final Tile tile = board.get(i, j);
+                tileMap.put(i, j, tile);
+            }
+            if(isValid(destinationCoordX, destinationCoordY)){
+                tileMap.put(destinationCoordX, destinationCoordY,
+                        O_BIASED_TILE_CACHE.get(destinationCoordX,
+                                destinationCoordY));
             }
         }
         return new Play(tileMap, O_BIASED_TILE_CACHE.get(destinationCoordX,
