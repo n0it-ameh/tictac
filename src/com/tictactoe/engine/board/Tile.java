@@ -1,11 +1,9 @@
-package com.tictactoe.engine;
+package com.tictactoe.engine.board;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-
-import java.util.*;
+import com.tictactoe.engine.Alliance;
 
 public abstract class Tile {
 

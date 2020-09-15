@@ -1,4 +1,6 @@
-package com.tictactoe.engine;
+package com.tictactoe.engine.board;
+
+import com.tictactoe.engine.play.Play;
 
 import java.util.ArrayList;
 import java.util.List;

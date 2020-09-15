@@ -1,18 +1,16 @@
-package com.tictactoe.engine;
+package com.tictactoe.tests;
 
-import com.google.common.collect.Table;
+import com.tictactoe.engine.board.Board;
+import com.tictactoe.engine.play.Play;
 
 import java.util.Scanner;
 
-import static com.tictactoe.engine.Alliance.*;
-import static com.tictactoe.engine.Board.hasEmptyTiles;
-import static com.tictactoe.engine.BoardUtils.*;
-import static com.tictactoe.engine.Tile.O_BIASED_TILE_CACHE;
-import static com.tictactoe.engine.Tile.X_BIASED_TILE_CACHE;
+import static com.tictactoe.engine.board.BoardUtils.*;
+import static com.tictactoe.engine.play.GameStatus.GAME_ON_GOING;
 
 public class JTic {
     public static void main(String[] args) {
-        Board board1 = Board.create(0, 0, null);
+        Board board1 = Board.create();
         Play.createFirstPlay(board1);
         Scanner sc = new Scanner(System.in);
         do {
@@ -25,6 +23,6 @@ public class JTic {
                 Play play = Play.playO(playTank.get(playTank.size() - 1), getX(coord), getY(coord));
             }
         }
-        while (!playTank.get(playTank.size() - 1).isBoardOver);
+        while (playTank.get(playTank.size() - 1).checkStatus(playTank.get(playTank.size() - 1)) == GAME_ON_GOING);
     }
 }

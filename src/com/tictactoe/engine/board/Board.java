@@ -1,4 +1,4 @@
-package com.tictactoe.engine;
+package com.tictactoe.engine.board;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.ImmutableList;
@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static com.tictactoe.engine.BoardUtils.isValid;
-import static com.tictactoe.engine.Tile.EMPTY_TILE_CACHE;
+import static com.tictactoe.engine.board.BoardUtils.isValid;
+import static com.tictactoe.engine.board.Tile.EMPTY_TILE_CACHE;
 
 public class Board {
 
     private final Table<Integer, Integer, Tile> board;
     private final Collection<Tile> emptyTiles;
 
-    public static Board create(final int tileCoordX, final int tileCoordY, final Tile tile){
-        return new Board(tileCoordX, tileCoordY, tile);
+    public static Board create(){
+        return new Board(0, 0, null);
     }
 
     public Tile get(final int tileCoordX, final int tileCoordY){
