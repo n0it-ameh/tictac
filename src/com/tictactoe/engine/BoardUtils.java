@@ -1,11 +1,16 @@
 package com.tictactoe.engine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BoardUtils {
     private BoardUtils() { throw new RuntimeException("non instantiable !!!"); }
 
+    public static List<Play> playTank = new ArrayList<>();
     public static boolean isValid(final int coordX, final int coordY){
         return coordX >= 0 && coordX < 3 && coordY >= 0 && coordY < 3;
     }
+
 
     public static int getX(int input){
         if(input == 1 || input == 2 || input == 3){
@@ -28,4 +33,5 @@ public class BoardUtils {
         }
         throw new RuntimeException("invalid Y coordination !!");
     }
+
 }

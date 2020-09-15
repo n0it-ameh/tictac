@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.tictactoe.engine.BoardUtils.isValid;
+import static com.tictactoe.engine.BoardUtils.playTank;
 import static com.tictactoe.engine.Tile.O_BIASED_TILE_CACHE;
 import static com.tictactoe.engine.Tile.X_BIASED_TILE_CACHE;
 
@@ -17,6 +18,8 @@ public class Play {
     protected final Tile tile;
     protected final int destinationCoordX;
     protected final int destinationCoordY;
+    protected final boolean oWins;
+    protected final boolean xWins;
 
     private Play(final Table<Integer, Integer, Tile> board, final Tile tile,
                  final int destinationCoordX, final int destinationCoordY) {
@@ -24,6 +27,95 @@ public class Play {
         this.tile = tile;
         this.destinationCoordX = destinationCoordX;
         this.destinationCoordY = destinationCoordY;
+        xWins = isXWinning(this);
+        oWins = isOWinning(this);
+        System.out.println(this);
+        if (isOWinning(this)) {
+            System.out.println("O won");
+        }else if(isXWinning(this)){
+            System.out.println("X won");
+        }
+        playTank.add(this);
+    }
+
+    public boolean isXWinning(final Play play){
+        final Alliance alliance = Alliance.X;
+        int countDiag951 = 0;
+        int countDiag753 = 0;
+        for(int i = 0; i < 3; i++){
+            if(play.get(i, 0).getAlliance() != null &&
+               play.get(i, 1).getAlliance() != null &&
+               play.get(i, 2).getAlliance() != null){
+                if(play.get(i, 0).getAlliance() == alliance &&
+                   play.get(i, 1).getAlliance() == alliance &&
+                   play.get(i, 2).getAlliance() == alliance){
+                    return true;
+                }
+            }else if(play.get(0, i).getAlliance() != null &&
+               play.get(1, i).getAlliance() != null &&
+               play.get(2, i).getAlliance() != null){
+                if(play.get(0, i).getAlliance() == alliance &&
+                play.get(1, i).getAlliance() == alliance &&
+                play.get(2, i).getAlliance() == alliance){
+                    return true;
+                }
+            }
+        }
+        for(int i = 0, j = 2; i < 3; i++,j--){
+            if(play.get(i, j).getAlliance() != null){
+                if(play.get(i, j).getAlliance() == alliance){
+                    countDiag951++;
+                }
+            }
+        }
+        for(int i = 0, j = 0; i < 3; i++,j++){
+            if(play.get(i, j).getAlliance() != null) {
+                if (play.get(i, j).getAlliance() == alliance) {
+                    countDiag753++;
+                }
+            }
+        }
+        return countDiag951 == 3 || countDiag753 == 3;
+    }
+
+    public boolean isOWinning(final Play play){
+        final Alliance alliance = Alliance.O;
+        int countDiag951 = 0;
+        int countDiag753 = 0;
+        for(int i = 0; i < 3; i++){
+            if(play.get(i, 0).getAlliance() != null &&
+                    play.get(i, 1).getAlliance() != null &&
+                    play.get(i, 2).getAlliance() != null){
+                if(play.get(i, 0).getAlliance() == alliance &&
+                        play.get(i, 1).getAlliance() == alliance &&
+                        play.get(i, 2).getAlliance() == alliance){
+                    return true;
+                }
+            }else if(play.get(0, i).getAlliance() != null &&
+                    play.get(1, i).getAlliance() != null &&
+                    play.get(2, i).getAlliance() != null){
+                if(play.get(0, i).getAlliance() == alliance &&
+                        play.get(1, i).getAlliance() == alliance &&
+                        play.get(2, i).getAlliance() == alliance){
+                    return true;
+                }
+            }
+        }
+        for(int i = 0, j = 2; i < 3; i++,j--){
+            if(play.get(i, j).getAlliance() != null){
+                if(play.get(i, j).getAlliance() == alliance){
+                    countDiag951++;
+                }
+            }
+        }
+        for(int i = 0, j = 0; i < 3; i++,j++){
+            if(play.get(i, j).getAlliance() != null) {
+                if (play.get(i, j).getAlliance() == alliance) {
+                    countDiag753++;
+                }
+            }
+        }
+        return countDiag951 == 3 || countDiag753 == 3;
     }
 
     @Override
