@@ -12,7 +12,7 @@ public class BoardUtils {
     }
 
 
-    public static int getX(int input){
+    public static int getX(final int input){
         if(input == 1 || input == 2 || input == 3){
             return 2;
         }else if(input == 4 || input == 5 || input == 6){
@@ -23,7 +23,7 @@ public class BoardUtils {
             throw new RuntimeException("invalid X coordination !!");
     }
 
-    public static int getY(int input){
+    public static int getY(final int input){
         if(input == 1 || input == 4 || input == 7){
             return 0;
         }else if(input == 2 || input == 5 || input == 8){

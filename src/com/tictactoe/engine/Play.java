@@ -10,8 +10,7 @@ import java.util.List;
 
 import static com.tictactoe.engine.BoardUtils.isValid;
 import static com.tictactoe.engine.BoardUtils.playTank;
-import static com.tictactoe.engine.Tile.O_BIASED_TILE_CACHE;
-import static com.tictactoe.engine.Tile.X_BIASED_TILE_CACHE;
+import static com.tictactoe.engine.Tile.*;
 
 public class Play {
     private final Table<Integer, Integer, Tile> board;
@@ -20,6 +19,8 @@ public class Play {
     protected final int destinationCoordY;
     protected final boolean oWins;
     protected final boolean xWins;
+    protected final boolean isBoardOver;
+
 
     private Play(final Table<Integer, Integer, Tile> board, final Tile tile,
                  final int destinationCoordX, final int destinationCoordY) {
@@ -27,15 +28,23 @@ public class Play {
         this.tile = tile;
         this.destinationCoordX = destinationCoordX;
         this.destinationCoordY = destinationCoordY;
-        xWins = isXWinning(this);
-        oWins = isOWinning(this);
+        this.isBoardOver = isBoardComplete(this);
+        this.xWins = isXWinning(this);
+        this.oWins = isOWinning(this);
         System.out.println(this);
-        if (isOWinning(this)) {
-            System.out.println("O won");
-        }else if(isXWinning(this)){
-            System.out.println("X won");
-        }
         playTank.add(this);
+    }
+
+    public static boolean isBoardComplete(final Play play) {
+        int biasedTiles = 0;
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(play.get(i, j).isTileBiased()){
+                    biasedTiles++;
+                }
+            }
+        }
+        return biasedTiles == 9 || play.isXWinning(play) || play.isOWinning(play);
     }
 
     public boolean isXWinning(final Play play){
@@ -49,6 +58,7 @@ public class Play {
                 if(play.get(i, 0).getAlliance() == alliance &&
                    play.get(i, 1).getAlliance() == alliance &&
                    play.get(i, 2).getAlliance() == alliance){
+                    System.out.println("X WON !!");
                     return true;
                 }
             }else if(play.get(0, i).getAlliance() != null &&
@@ -57,6 +67,7 @@ public class Play {
                 if(play.get(0, i).getAlliance() == alliance &&
                 play.get(1, i).getAlliance() == alliance &&
                 play.get(2, i).getAlliance() == alliance){
+                    System.out.println("X WON !!");
                     return true;
                 }
             }
@@ -75,7 +86,11 @@ public class Play {
                 }
             }
         }
-        return countDiag951 == 3 || countDiag753 == 3;
+        if(countDiag753 == 3 || countDiag951 == 3){
+            System.out.println("X WON !!");
+            return true;
+        }
+        return false;
     }
 
     public boolean isOWinning(final Play play){
@@ -89,6 +104,7 @@ public class Play {
                 if(play.get(i, 0).getAlliance() == alliance &&
                         play.get(i, 1).getAlliance() == alliance &&
                         play.get(i, 2).getAlliance() == alliance){
+                    System.out.println("O WON !!");
                     return true;
                 }
             }else if(play.get(0, i).getAlliance() != null &&
@@ -97,6 +113,7 @@ public class Play {
                 if(play.get(0, i).getAlliance() == alliance &&
                         play.get(1, i).getAlliance() == alliance &&
                         play.get(2, i).getAlliance() == alliance){
+                    System.out.println("O WON !!");
                     return true;
                 }
             }
@@ -115,7 +132,11 @@ public class Play {
                 }
             }
         }
-        return countDiag951 == 3 || countDiag753 == 3;
+        if(countDiag951 == 3 || countDiag753 == 3){
+            System.out.println("O WON !!");
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -137,16 +158,40 @@ public class Play {
         return this.board.get(tileCoordX, tileCoordY);
    }
 
-   public Collection<Play> getXLegalPlays(Board board){
+    public Collection<Play> getXLegalPlays() {
         final List<Play> legalPlays = new ArrayList<>();
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                if(!this.board.get(i, j).isTileBiased()){
-                    legalPlays.add(playX(board, i, j));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!this.get(i, j).isTileBiased()) {
+                    legalPlays.add(playX(this, i, j));
                 }
             }
         }
         return ImmutableList.copyOf(legalPlays);
+    }
+
+    public Collection<Play> getOLegalPlays() {
+        final List<Play> legalPlays = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!this.get(i, j).isTileBiased()) {
+                    legalPlays.add(playO(this, i, j));
+                }
+            }
+        }
+        return ImmutableList.copyOf(legalPlays);
+    }
+
+   public static Play createFirstPlay(final Board board){
+        final Table<Integer, Integer, Tile> tileMap = HashBasedTable.create();
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                final Tile tile = board.get(i, j);
+                tileMap.put(i, j, tile);
+            }
+        }
+        return new Play(tileMap, EMPTY_TILE_CACHE.get(0, 0),
+                0, 0);
    }
 
     public static Play playX(final Play play,

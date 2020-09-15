@@ -8,13 +8,6 @@ import com.google.common.collect.Table;
 import java.util.*;
 
 public abstract class Tile {
-    public final int getTileCoordX(final Tile tile) {
-        return tile.tileCoordX;
-    }
-
-    public final int getTileCoordY(final Tile tile) {
-        return tile.tileCoordY;
-    }
 
     protected final int tileCoordX;
     protected final int tileCoordY;
@@ -29,6 +22,14 @@ public abstract class Tile {
 
     public abstract boolean isTileBiased();
     public abstract Alliance getAlliance();
+
+    public final int getTileCoordX(final Tile tile) {
+        return tile.tileCoordX;
+    }
+    public final int getTileCoordY(final Tile tile) {
+        return tile.tileCoordY;
+    }
+
 
     private static Table<Integer, Integer, Tile> createAllPossibleXTiles(){
         final Table<Integer, Integer, Tile> xTileMap = HashBasedTable.create();
