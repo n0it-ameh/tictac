@@ -3,14 +3,14 @@ package com.tictactoe.engine.player;
 import com.tictactoe.engine.Alliance;
 import com.tictactoe.engine.play.Play;
 
-public class XPlayer extends Player{
-    protected XPlayer(Play playerPlay) {
-        super(playerPlay);
-    }
+import java.util.Collection;
+
+public class XPlayer extends Player {
+    protected XPlayer(final Play playerPlay) { super(playerPlay); }
 
     @Override
-    public boolean calculateTurn() {
-        return false;
+    public boolean isHisTurn(Play playerPlay) {
+        return playerPlay.getPlayAlliance() != this.playerAlliance;
     }
 
     @Override
@@ -23,4 +23,16 @@ public class XPlayer extends Player{
         //TODO to be assigned through gui radio button
         return PlayerType.HUMAN;
     }
+
+    @Override
+    public Collection<Play> getPlayerLegalMoves(final Play playerPlay) {
+        return playerPlay.getXLegalPlays();
+    }
+
+    @Override
+    public Collection<Play> getOpponentLegalMoves(Play playerPlay) {
+        return playerPlay.getOLegalPlays();
+    }
+
+
 }

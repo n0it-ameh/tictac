@@ -39,6 +39,11 @@ public class Play {
         printGameStatus(this);
     }
 
+    public Alliance getPlayAlliance() {
+        return playAlliance;
+    }
+
+
     public void printGameStatus(Play play){
         if(checkStatus(play) == X_WON){
             System.out.println(X_WON);
