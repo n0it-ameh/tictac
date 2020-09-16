@@ -7,11 +7,21 @@ import com.tictactoe.engine.play.Play;
 import java.util.Collection;
 
 public class XPlayer extends Player {
-    protected XPlayer(final Play playerPlay) { super(playerPlay); }
+    protected final Play playerPlay;
+    protected final boolean itsPlayerTurn;
+    protected final Collection<Play> playerLegalMoves;
+    protected final Collection<Play> opponentLegalMoves;
+
+    protected XPlayer(final Play playerPlay) {
+        this.playerPlay = playerPlay;
+        this.itsPlayerTurn = isHisTurn(playerPlay);
+        this.playerLegalMoves = getPlayerLegalMoves(playerPlay);
+        this.opponentLegalMoves = getOpponentLegalMoves(playerPlay);
+    }
 
     @Override
     public Play getPlayerPlay() { return this.playerPlay; }
-    public static XPlayer createXPlayer(final Play playerPlay){return new XPlayer(playerPlay);}
+    public static XPlayer createXPlayer(){return new XPlayer(this.playerPlay);}
     @Override
     public boolean isHisTurn(Play playerPlay) {
         return playerPlay.getPlayAlliance() != this.playerAlliance;

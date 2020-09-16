@@ -8,18 +8,12 @@ import java.util.Collection;
 public abstract class Player {
     protected final PlayerType playerType;
     protected final Alliance playerAlliance;
-    protected final Play playerPlay;
-    protected final boolean itsPlayerTurn;
-    protected final Collection<Play> playerLegalMoves;
-    protected final Collection<Play> opponentLegalMoves;
 
-    protected Player(final Play playerPlay ) {
-        this.playerPlay = playerPlay;
+
+    protected Player() {
         this.playerAlliance = getPlayerAlliance();
-        this.itsPlayerTurn = isHisTurn(playerPlay);
         this.playerType = getPlayerType();
-        this.playerLegalMoves = getPlayerLegalMoves(playerPlay);
-        this.opponentLegalMoves = getOpponentLegalMoves(playerPlay);
+
     }
 
     public abstract Play getPlayerPlay();

@@ -16,7 +16,7 @@ public class JTic {
     public static void main(String[] args) {
         Board board1 = Board.create();
         Play firstPlay = Play.createFirstPlay(board1);
-        Player xPlayer = createXPlayer(firstPlay);
+        Player xPlayer = XPlayer.createXPlayer(firstPlay);
         //Player oPlayer = createOPlayer(firstPlay);
         Scanner sc = new Scanner(System.in);
         do {
