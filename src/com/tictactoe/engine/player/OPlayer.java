@@ -1,51 +1,45 @@
 package com.tictactoe.engine.player;
 
-import com.tictactoe.engine.Alliance;
+
 import com.tictactoe.engine.board.Board;
-import com.tictactoe.engine.play.Play;
 
 import java.util.Collection;
 
-public class OPlayer extends Player {
-    protected OPlayer(final Play playerPlay) {
-        super(playerPlay);
+import static com.tictactoe.engine.board.Board.calculateOLegalPlays;
+import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
+import static com.tictactoe.engine.board.BoardUtils.playTank;
+import static com.tictactoe.engine.board.Tile.EMPTY_TILE_CACHE;
+import static com.tictactoe.engine.board.Tile.O_BIASED_TILE_CACHE;
+import static com.tictactoe.engine.play.Play.executePlay;
+
+public class OPlayer implements Player {
+    private final PlayerType oPlayerType;
+    private static final OPlayer INSTANCE = new OPlayer();
+
+    private OPlayer(){ this.oPlayerType = setPlayerType(); }
+    public static OPlayer getInstance() { return INSTANCE; }
+    @Override
+    public Board getCurrentBoard(){ return playTank.get(playTank.size() - 1); }
+    @Override
+    public Board getPlayerBoard() { return getCurrentBoard(); }
+    @Override
+    public Collection<Board> getPlayerLegalPlays() { return calculateOLegalPlays(getPlayerBoard()); }
+    @Override
+    public Collection<Board> getOpponentLegalPlays() { return calculateXLegalPlays(getPlayerBoard()); }
+    @Override
+    public Board executePlayerPlay(final int tileCoordX, final int tileCoordY) {
+        return executePlay(getCurrentBoard(), tileCoordX, tileCoordY,
+                            O_BIASED_TILE_CACHE.get(tileCoordX, tileCoordY));
     }
-
     @Override
-    public Play getPlayerPlay() { return this.playerPlay; }
-
-    public static OPlayer createOPlayer(final Play playerPlay){return new OPlayer(playerPlay);}
-
-    @Override
-    public boolean isHisTurn(Play playerPlay) {
-        return playerPlay.getPlayAlliance() != this.playerAlliance;
+    public Board executePlayerLegalPlay(final Board legalPlay, final XPlayer xPlayer, final OPlayer oPlayer) {
+        return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0));
     }
-
     @Override
-    public Alliance getPlayerAlliance() {
-        return Alliance.O;
-    }
-
-    @Override
-    public PlayerType getPlayerType() {
+    public PlayerType setPlayerType(){
         //TODO to be assigned through gui radio button
-        return PlayerType.HUMAN;
+        return PlayerType.AI;
     }
-
     @Override
-    public Collection<Play> getPlayerLegalMoves(final Play playerPlay) {
-        return playerPlay.getOLegalPlays();
-    }
-
-    @Override
-    public Collection<Play> getOpponentLegalMoves(Play playerPlay) {
-        return playerPlay.getXLegalPlays();
-    }
-
-    @Override
-    public Play executePlay(Play play, int destinationCoordX, int destinationCoordY) {
-        return Play.playO(play, destinationCoordX, destinationCoordY);
-    }
-
-
+    public PlayerType getPlayerType() { return this.oPlayerType; }
 }

@@ -1,28 +1,17 @@
 package com.tictactoe.engine.player;
 
-import com.tictactoe.engine.Alliance;
-import com.tictactoe.engine.play.Play;
+import com.tictactoe.engine.board.Board;
 
 import java.util.Collection;
 
-public abstract class Player {
-    protected final PlayerType playerType;
-    protected final Alliance playerAlliance;
+public interface Player {
 
-
-    protected Player() {
-        this.playerAlliance = getPlayerAlliance();
-        this.playerType = getPlayerType();
-
-    }
-
-    public abstract Play getPlayerPlay();
-
-    public abstract boolean isHisTurn(final Play playerPlay);
-    public abstract Alliance getPlayerAlliance();
+    public abstract Board getPlayerBoard();
+    public abstract Collection<Board> getPlayerLegalPlays();
+    public abstract Collection<Board> getOpponentLegalPlays();
+    public abstract Board executePlayerPlay(final int tileCoordX, final int tileCoordY);
+    public abstract Board executePlayerLegalPlay(final Board legalPlay, final XPlayer xPlayer, final OPlayer oPlayer);
+    public abstract Board getCurrentBoard();
+    public abstract PlayerType setPlayerType();
     public abstract PlayerType getPlayerType();
-    public abstract Collection<Play> getPlayerLegalMoves(final Play playerPlay);
-    public abstract Collection<Play> getOpponentLegalMoves(final Play playerPlay);
-    //TODO ####check in#####...........................
-    public abstract Play executePlay(final Play play, final int destinationCoordX, final int destinationCoordY);
 }

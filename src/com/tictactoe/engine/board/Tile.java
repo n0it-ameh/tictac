@@ -21,11 +21,9 @@ public abstract class Tile {
     public abstract boolean isTileBiased();
     public abstract Alliance getAlliance();
 
-    public final int getTileCoordX(final Tile tile) {
-        return tile.tileCoordX;
-    }
-    public final int getTileCoordY(final Tile tile) {
-        return tile.tileCoordY;
+    public final int getTileCoordX() { return this.tileCoordX; }
+    public final int getTileCoordY() {
+        return this.tileCoordY;
     }
 
 
@@ -94,4 +92,6 @@ public abstract class Tile {
         @Override
         public String toString(){ return tileAlliance == Alliance.X ? "| X |" : "| O |";}
     }
+
+
 }

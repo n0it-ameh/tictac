@@ -1,54 +1,47 @@
 package com.tictactoe.engine.player;
 
-import com.tictactoe.engine.Alliance;
+
 import com.tictactoe.engine.board.Board;
-import com.tictactoe.engine.play.Play;
 
 import java.util.Collection;
 
-public class XPlayer extends Player {
-    protected final Play playerPlay;
-    protected final boolean itsPlayerTurn;
-    protected final Collection<Play> playerLegalMoves;
-    protected final Collection<Play> opponentLegalMoves;
+import static com.tictactoe.engine.board.Board.calculateOLegalPlays;
+import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
+import static com.tictactoe.engine.board.BoardUtils.playTank;
+import static com.tictactoe.engine.board.Tile.EMPTY_TILE_CACHE;
+import static com.tictactoe.engine.board.Tile.X_BIASED_TILE_CACHE;
+import static com.tictactoe.engine.play.Play.executePlay;
 
-    protected XPlayer(final Play playerPlay) {
-        this.playerPlay = playerPlay;
-        this.itsPlayerTurn = isHisTurn(playerPlay);
-        this.playerLegalMoves = getPlayerLegalMoves(playerPlay);
-        this.opponentLegalMoves = getOpponentLegalMoves(playerPlay);
-    }
+public class XPlayer implements Player {
+    private final PlayerType xPlayerType;
+    private static final XPlayer INSTANCE = new XPlayer();
 
+    private XPlayer(){
+        this.xPlayerType = setPlayerType();
+    }
+    public static XPlayer getInstance() { return INSTANCE; }
     @Override
-    public Play getPlayerPlay() { return this.playerPlay; }
-    public static XPlayer createXPlayer(){return new XPlayer(this.playerPlay);}
+    public Board getCurrentBoard(){ return playTank.get(playTank.size() - 1); }
     @Override
-    public boolean isHisTurn(Play playerPlay) {
-        return playerPlay.getPlayAlliance() != this.playerAlliance;
+    public Board getPlayerBoard() { return getCurrentBoard(); }
+    @Override
+    public Collection<Board> getPlayerLegalPlays() { return calculateXLegalPlays(getPlayerBoard()); }
+    @Override
+    public Collection<Board> getOpponentLegalPlays() { return calculateOLegalPlays(getPlayerBoard()); }
+    @Override
+    public Board executePlayerPlay(final int tileCoordX, final int tileCoordY) {
+        return executePlay(getCurrentBoard(), tileCoordX, tileCoordY,
+                            X_BIASED_TILE_CACHE.get(tileCoordX, tileCoordY));
     }
     @Override
-    public Alliance getPlayerAlliance() {
-        return Alliance.X;
+    public Board executePlayerLegalPlay(final Board legalPlay, final XPlayer xPlayer, final OPlayer oPlayer) {
+        return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0));
     }
     @Override
-    public PlayerType getPlayerType() {
+    public  PlayerType setPlayerType() {
         //TODO to be assigned through gui radio button
-        return PlayerType.HUMAN;
+        return PlayerType.AI;
     }
     @Override
-    public Collection<Play> getPlayerLegalMoves(final Play playerPlay) {
-        return playerPlay.getXLegalPlays();
-    }
-
-    @Override
-    public Collection<Play> getOpponentLegalMoves(Play playerPlay) {
-        return playerPlay.getOLegalPlays();
-    }
-
-    @Override
-    public Play executePlay(final Play play, final int destinationCoordX, final int destinationCoordY) {
-        return Play.playX(play, destinationCoordX, destinationCoordY);
-    }
-
-
+    public PlayerType getPlayerType() { return this.xPlayerType; }
 }
