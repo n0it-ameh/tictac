@@ -1,19 +1,13 @@
 package com.tictactoe.engine.play;
 
-import com.google.common.collect.ImmutableList;
-import com.tictactoe.engine.Alliance;
 import com.tictactoe.engine.board.Board;
 import com.tictactoe.engine.board.Line;
-import com.tictactoe.engine.board.Tile;
-import com.tictactoe.engine.player.PlayerType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.tictactoe.engine.board.BoardUtils.playTank;
 
 public enum PlayType {
-    WINNING_PLAY,
+    X_WINNING_PLAY,
+    O_WINNING_PLAY,
     X_BLOCKING_PLAY,
     O_BLOCKING_PLAY,
     FORK_PLAY,
@@ -23,21 +17,21 @@ public enum PlayType {
 
     public static PlayType getPlayType(final Board board){
         final Board originalBoard = playTank.get(playTank.size() - 1);
-        int countOriginalBoardXBlock = 0;
-        int countOriginalBoardOBlock = 0;
+        int countO = 0;
+        int countX = 0;
+        int countXBlock = 0;
+        int countOBlock = 0;
+        int countXOriginalBlock = 0;
+        int countOOriginalBlock = 0;
 
-        for(final Line originalLine : originalBoard.getBoardLines() ) {
-            if(originalLine.isOBlockingLine())
-                countOriginalBoardOBlock++;
-            else if(originalLine.isXBlockingLine())
-                countOriginalBoardXBlock++;
+        for(final Line line : originalBoard.getBoardLines()) {
+            if(line.isOBlockingLine())
+                countOOriginalBlock++;
+            else if(line.isXBlockingLine())
+                countXOriginalBlock++;
         }
 
         for(final Line line : board.getBoardLines()){
-            int countO = 0;
-            int countX = 0;
-            int countXBlock = 0;
-            int countOBlock = 0;
             if (line.isLineTrifectaO())
                 countO++;
             else if (line.isLineTrifectaX())
@@ -46,17 +40,21 @@ public enum PlayType {
                 countXBlock++;
             else if (line.isOBlockingLine())
                 countOBlock++;
-
-            if(countX == 3 || countO == 3)
-                return PlayType.WINNING_PLAY;
-            else if(countXBlock > countOriginalBoardXBlock)
-                return PlayType.X_BLOCKING_PLAY;
-            else if(countOBlock > countOriginalBoardOBlock)
-                return PlayType.O_BLOCKING_PLAY;
         }
+
+
+        if(countX > 0)
+            return PlayType.X_WINNING_PLAY;
+        else if(countO > 0)
+            return PlayType.O_WINNING_PLAY;
+        else if(countXBlock > countXOriginalBlock)
+            return PlayType.X_BLOCKING_PLAY;
+        else if(countOBlock > countOOriginalBlock)
+            return PlayType.O_BLOCKING_PLAY;
+
+
         return PlayType.NORMAL_PLAY;
     }
-
 
 
 }

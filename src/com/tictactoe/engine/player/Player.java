@@ -10,7 +10,7 @@ public interface Player {
     public abstract Collection<Board> getPlayerLegalPlays();
     public abstract Collection<Board> getOpponentLegalPlays();
     public abstract Board executePlayerPlay(final int tileCoordX, final int tileCoordY);
-    public abstract Board executePlayerLegalPlay(final Board legalPlay, final XPlayer xPlayer, final OPlayer oPlayer);
+    public abstract Board executePlayerLegalPlay(final Board legalPlay);
     public abstract Board getCurrentBoard();
     public abstract PlayerType setPlayerType();
     public abstract PlayerType getPlayerType();

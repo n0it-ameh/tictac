@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static com.tictactoe.engine.board.Line.setLine;
 import static com.tictactoe.engine.board.Tile.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestLine {
 
@@ -29,9 +30,18 @@ public class TestLine {
         final Tile tile9 = createTile(0,2, Alliance.X);
         final Line line3 = setLine(tile7, tile8, tile9);
 
+        final Tile tile10 = createTile(2,0, Alliance.X);
+        final Tile tile11 = createTile(1,1, Alliance.O);
+        final Tile tile12 = createTile(0,2, null);
+        final Line line4 = setLine(tile10, tile11, tile12);
+
         assertTrue(line1.isLineTrifectaX());
         assertTrue(line2.isLineTrifectaO());
         assertFalse(line3.isLineTrifectaX());
+        assertTrue(line3.isOBlockingLine());
+        assertFalse(line4.isXBlockingLine());
+        assertFalse(line4.isOBlockingLine());
+        assertTrue(line4.isLineNeutralXO());
 
     }
 }

@@ -2,6 +2,7 @@ package com.tictactoe.tests;
 
 import com.tictactoe.engine.board.Board;
 import com.tictactoe.engine.play.GameStatus;
+import com.tictactoe.engine.play.PlayType;
 import com.tictactoe.engine.player.OPlayer;
 import com.tictactoe.engine.player.PlayerType;
 import com.tictactoe.engine.player.XPlayer;
@@ -18,6 +19,7 @@ import static com.tictactoe.engine.board.BoardUtils.*;
 import static com.tictactoe.engine.board.BoardUtils.getY;
 import static com.tictactoe.engine.board.Tile.*;
 import static com.tictactoe.engine.play.Play.executePlay;
+import static com.tictactoe.engine.play.PlayType.*;
 
 public class JHumanVsAi {
     public static void main(String[] args) {
@@ -35,31 +37,21 @@ public class JHumanVsAi {
             String input = sc.nextLine();
             int coord = Character.getNumericValue(input.charAt(1));
             char alliance = input.charAt(0);
-            if (alliance == 'x' && oPlayer.getPlayerType() != PlayerType.AI) {
-               xPlayer.executePlayerPlay(getX(coord), getY(coord));
-            } else if (alliance == 'o' && xPlayer.getPlayerType() != PlayerType.AI){
-                oPlayer.executePlayerPlay(getX(coord), getY(coord));
-            }else if(alliance == 'x' && oPlayer.getPlayerType() == PlayerType.AI &&
+
+             if(alliance == 'x' && oPlayer.getPlayerType() == PlayerType.AI &&
                     playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING){
                 xPlayer.executePlayerPlay(getX(coord), getY(coord));
                 final Map<Board, Integer> evalO = new HashMap<>();
-                final List<Board> oLegalPlays = calculateOLegalPlays(playTank.get(playTank.size() - 1));
-                for(final Board board22 : oLegalPlays){
+                for(final Board board22 : calculateOLegalPlays(playTank.get(playTank.size() - 1))){
                     evalO.put(board22, minimax(board22, 0, false));
+                    if(getPlayType(board22) == PlayType.O_WINNING_PLAY)
+                        evalO.put(board22, -1999999999);
+                    else if(getPlayType(board22) == PlayType.O_BLOCKING_PLAY)
+                        evalO.put(board22, -10000);
+
                 }
                 if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
-                    oPlayer.executePlayerLegalPlay(getBoardWithLowestEvaluation(evalO), xPlayer, oPlayer);
-                }
-            }else if(alliance == 'o' && xPlayer.getPlayerType() == PlayerType.AI &&
-                    playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING){
-                oPlayer.executePlayerPlay(getX(coord), getY(coord));
-                final Map<Board, Integer> evalX = new HashMap<>();
-                final List<Board> xLegalPlays = calculateXLegalPlays(playTank.get(playTank.size() - 1));
-                for(final Board board22 : xLegalPlays){
-                    evalX.put(board22, minimax(board22, 0, true));
-                }
-                if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
-                    xPlayer.executePlayerLegalPlay(getBoardWithHighestEvaluation(evalX), xPlayer, oPlayer);
+                    oPlayer.executePlayerLegalPlay(getBoardWithLowestEvaluation(evalO));
                 }
             }
         }

@@ -32,7 +32,7 @@ public class OPlayer implements Player {
                             O_BIASED_TILE_CACHE.get(tileCoordX, tileCoordY));
     }
     @Override
-    public Board executePlayerLegalPlay(final Board legalPlay, final XPlayer xPlayer, final OPlayer oPlayer) {
+    public Board executePlayerLegalPlay(final Board legalPlay) {
         return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0));
     }
     @Override

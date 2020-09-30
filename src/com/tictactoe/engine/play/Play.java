@@ -8,6 +8,7 @@ import com.tictactoe.engine.board.Tile;
 
 import static com.tictactoe.engine.board.Board.newBoard;
 import static com.tictactoe.engine.board.BoardUtils.*;
+import static com.tictactoe.engine.play.PlayType.*;
 
 public class Play {
     private final Board playedBoard;

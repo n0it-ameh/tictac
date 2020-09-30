@@ -13,14 +13,15 @@ public class BoardEvaluation {
      * https://en.wikipedia.org/wiki/Minimax
      * */
 
-
     public static int evaluate(final Board board){
-        int count2X = 0;
-        int count2O = 0;
-        int count1X = 0;
-        int count1O = 0;
+        int count2X = 0, count2O = 0, count1X = 0, count1O = 0,
+                count3X = 0, count3O = 0, countXB = 0, countOB = 0;
 
         for(final Line line : board.getBoardLines()){
+            if(line.isLineTrifectaX())
+                count3X++;
+            else if(line.isLineTrifectaO())
+                count3O++;
             if(line.hasDoubleX())
                 count2X++;
             else if(line.hasDoubleO())
@@ -29,7 +30,12 @@ public class BoardEvaluation {
                 count1X++;
             else if(line.hasSingleO())
                 count1O++;
+            else if(line.isXBlockingLine())
+                countXB++;
+            else if(line.isOBlockingLine())
+                countOB++;
         }
-        return 3 * count2X + count1X - 3 * count2O -count1O;
+        return 10 * count3X + 6 * countXB + 3 * count2X + count1X -
+                10 * count3O - 6 * countOB - 3 * count2O -count1O;
     }
 }

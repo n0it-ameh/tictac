@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static com.tictactoe.engine.board.BoardUtils.boardTestBuilder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JBoardWinning {
+public class TestBoardWinning {
    @Test
    public void runTestWinningBoard() {
 

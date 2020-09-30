@@ -73,15 +73,27 @@ public class Line {
     }
 
     private boolean isLineMagicX(){
-        return tile1.getAlliance() == Alliance.X &&
-                tile2.getAlliance() == Alliance.X &&
-                tile3.getAlliance() == Alliance.X;
+        int countX = 0;
+        int countO = 0;
+        for(final Tile tile : this.getTileList()) {
+            if (tile.getAlliance() == Alliance.X)
+                countX++;
+            else if (tile.getAlliance() == Alliance.O)
+                countO++;
+        }
+        return countX == 3 && countO == 0;
     }
 
     private boolean isLineMagicO(){
-        return tile1.getAlliance() == Alliance.O &&
-                tile2.getAlliance() == Alliance.O &&
-                tile3.getAlliance() == Alliance.O;
+        int countX = 0;
+        int countO = 0;
+        for(final Tile tile : this.getTileList()) {
+            if (tile.getAlliance() == Alliance.X)
+                countX++;
+            else if (tile.getAlliance() == Alliance.O)
+                countO++;
+        }
+        return countX == 0 && countO == 3;
     }
 
     private boolean isLineBlockedByO() {
@@ -91,7 +103,7 @@ public class Line {
             if (tile.getAlliance() == Alliance.X)
                     countX++;
             else if (tile.getAlliance() == Alliance.O)
-                countO++;
+                    countO++;
         }
         return countX == 2 && countO == 1;
     }

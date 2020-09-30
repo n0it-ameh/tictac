@@ -15,6 +15,8 @@ public class BoardUtils {
 
     public static List<Board> playTank = new ArrayList<>();
     public static List<Alliance> allianceTank = new ArrayList<>();
+
+
     public static boolean isValid(final int coordX, final int coordY){
         return coordX >= 0 && coordX < 3 && coordY >= 0 && coordY < 3;
     }
@@ -69,7 +71,7 @@ public class BoardUtils {
         final Map<Board, Integer> map1 = map;
         int maxValueInMap=(Collections.max(map.values()));
         for (Map.Entry<Board, Integer> entry : map1.entrySet()) {
-            if (entry.getValue()==maxValueInMap) {
+            if (entry.getValue() == maxValueInMap) {
                 return entry.getKey();
             }
         }
@@ -80,7 +82,7 @@ public class BoardUtils {
         final Map<Board, Integer> map2 = map;
         int minValueInMap = (Collections.min(map.values()));
         for(Map.Entry<Board, Integer> entry : map2.entrySet()) {
-            if(entry.getValue()==minValueInMap) {
+            if(entry.getValue() == minValueInMap) {
                 return entry.getKey();
             }
         }
@@ -110,5 +112,7 @@ public class BoardUtils {
             table.put(getX(coord), getY(coord), EMPTY_TILE_CACHE.get(getX(coord), getY(coord)));
         }
     }
+
+
 
 }
