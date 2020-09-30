@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static com.tictactoe.engine.ai.FiveHead.fiveHead;
 import static com.tictactoe.engine.ai.Minimax.minimax;
 import static com.tictactoe.engine.board.Board.calculateOLegalPlays;
 import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
@@ -29,7 +30,8 @@ public class JHumanVsAi {
         allianceTank.add(null);
         final XPlayer xPlayer = XPlayer.getInstance();
         final OPlayer oPlayer = OPlayer.getInstance();
-
+        System.out.println(board);
+        System.out.println(board.getGameStatus());
 
 
         Scanner sc = new Scanner(System.in);
@@ -39,22 +41,20 @@ public class JHumanVsAi {
             char alliance = input.charAt(0);
 
              if(alliance == 'x' && oPlayer.getPlayerType() == PlayerType.AI &&
-                    playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING){
+                    playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING ||
+             playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_START){
                 xPlayer.executePlayerPlay(getX(coord), getY(coord));
                 final Map<Board, Integer> evalO = new HashMap<>();
                 for(final Board board22 : calculateOLegalPlays(playTank.get(playTank.size() - 1))){
-                    evalO.put(board22, minimax(board22, 0, false));
-                    if(getPlayType(board22) == PlayType.O_WINNING_PLAY)
-                        evalO.put(board22, -1999999999);
-                    else if(getPlayType(board22) == PlayType.O_BLOCKING_PLAY)
-                        evalO.put(board22, -10000);
-
+                    evalO.put(board22, fiveHead(board22, false));
                 }
-                if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
+                if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING ||
+                playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_START) {
                     oPlayer.executePlayerLegalPlay(getBoardWithLowestEvaluation(evalO));
                 }
             }
         }
-        while (playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING);
+        while (playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING ||
+        playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_START);
     }
 }

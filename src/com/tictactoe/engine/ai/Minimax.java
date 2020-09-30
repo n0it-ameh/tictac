@@ -6,7 +6,7 @@ import com.tictactoe.engine.play.PlayType;
 
 import static com.tictactoe.engine.board.Board.*;
 import static com.tictactoe.engine.board.BoardEvaluation.evaluate;
-import static com.tictactoe.engine.play.PlayType.getPlayType;
+import static com.tictactoe.engine.play.PlayType.*;
 
 public class Minimax {
     private Minimax(){ throw new RuntimeException("not instantiable "); }
@@ -28,7 +28,6 @@ public class Minimax {
             return evaluate(board) - depth * 20;
         else if(getPlayType(board) == PlayType.O_BLOCKING_PLAY)
             return evaluate(board) + depth * 20;
-
 
         else if(maximizing){
             int maxEval = Integer.MIN_VALUE;

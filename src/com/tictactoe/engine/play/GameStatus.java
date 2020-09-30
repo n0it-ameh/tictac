@@ -25,6 +25,10 @@ public enum GameStatus {
         public String toString(){
             return "BoardCompleted (TIE) ##";
         }
+    },
+    GAME_START{
+        @Override
+        public String toString() { return "Game Started"; }
     };
     @Override
     public abstract String toString();

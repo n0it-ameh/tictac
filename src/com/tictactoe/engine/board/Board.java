@@ -20,7 +20,6 @@ public class Board {
     private final List<Line> boardLines;
     private final GameStatus boardStatus;
 
-
     private Board(final Table<Integer, Integer, Tile> finalTable) {
         this.board = createBoard(finalTable);
         this.boardTiles = registerBoardTiles();
@@ -133,17 +132,18 @@ public class Board {
 
     private GameStatus calculateGameStatus() {
         final int emptyTilesNumber = this.emptyTiles.size();
-        if (isXWinning()){
+        if (isXWinning())
             return GameStatus.X_WON;
-        }else if (isOWinning()){
+        else if (isOWinning())
             return GameStatus.O_WON;
-        }else if (emptyTilesNumber == 0 && !isOWinning() && !isXWinning()){
+        else if (emptyTilesNumber == 0 && !isOWinning() && !isXWinning())
             return GameStatus.TIE;
-        }else if (emptyTilesNumber == 0 && isOWinning() && !isXWinning()){
+        else if (emptyTilesNumber == 0 && isOWinning() && !isXWinning())
             return GameStatus.O_WON;
-        }else if (emptyTilesNumber == 0 && !isOWinning() && isXWinning()){
+        else if (emptyTilesNumber == 0 && !isOWinning() && isXWinning())
             return GameStatus.X_WON;
-        }
+        else if(emptyTilesNumber == 9 && !isOWinning() && !isXWinning())
+            return GameStatus.GAME_START;
         return GameStatus.GAME_ON_GOING;
     }
 

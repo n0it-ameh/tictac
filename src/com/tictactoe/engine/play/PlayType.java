@@ -1,7 +1,9 @@
 package com.tictactoe.engine.play;
 
+import com.tictactoe.engine.Alliance;
 import com.tictactoe.engine.board.Board;
 import com.tictactoe.engine.board.Line;
+import com.tictactoe.engine.board.Tile;
 
 import static com.tictactoe.engine.board.BoardUtils.playTank;
 
@@ -10,6 +12,8 @@ public enum PlayType {
     O_WINNING_PLAY,
     X_BLOCKING_PLAY,
     O_BLOCKING_PLAY,
+    X_PREFERRED_PLAY,
+    O_PREFERRED_PLAY,
     FORK_PLAY,
     FORK_BLOCK,
     PREFERRED_PLAY,
@@ -42,7 +46,6 @@ public enum PlayType {
                 countOBlock++;
         }
 
-
         if(countX > 0)
             return PlayType.X_WINNING_PLAY;
         else if(countO > 0)
@@ -52,7 +55,16 @@ public enum PlayType {
         else if(countOBlock > countOOriginalBlock)
             return PlayType.O_BLOCKING_PLAY;
 
-
+        for(final Tile tile : board.getBoardTiles()){
+            if(tile.getTileCoordX() == 1 &&
+               tile.getTileCoordY() == 1 &&
+               tile.isTileBiased()){
+                if(tile.getAlliance() == Alliance.X)
+                    return PlayType.X_PREFERRED_PLAY;
+                else if(tile.getAlliance() == Alliance.O)
+                    return PlayType.O_PREFERRED_PLAY;
+            }
+        }
         return PlayType.NORMAL_PLAY;
     }
 

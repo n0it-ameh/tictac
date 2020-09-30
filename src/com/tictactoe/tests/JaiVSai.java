@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.tictactoe.engine.ai.FiveHead.fiveHead;
 import static com.tictactoe.engine.ai.Minimax.minimax;
 import static com.tictactoe.engine.board.Board.calculateOLegalPlays;
 import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
@@ -32,12 +33,7 @@ public class JaiVSai {
                 final Map<Board, Integer> evalX = new HashMap<>();
                 final List<Board> oLegalPlays = calculateOLegalPlays(playTank.get(playTank.size() - 1));
                 for(final Board board22 : oLegalPlays){
-                    if(getPlayType(board22) == PlayType.O_WINNING_PLAY)
-                        evalO.put(board22, Integer.MIN_VALUE);
-                    else if(getPlayType(board22) == PlayType.O_BLOCKING_PLAY)
-                        evalO.put(board22, -999999999);
-                    else
-                        evalO.put(board22, minimax(board22, 0, false));
+                        evalO.put(board22, fiveHead(board22, false));
                 }
                 if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
                     oPlayer.executePlayerLegalPlay(getBoardWithLowestEvaluation(evalO));
@@ -46,12 +42,7 @@ public class JaiVSai {
                 /*changing turn**/
                 final List<Board> xLegalPlays = calculateXLegalPlays(playTank.get(playTank.size() - 1));
                 for(final Board board22 : xLegalPlays){
-                    if(getPlayType(board22) == PlayType.X_WINNING_PLAY)
-                        evalX.put(board22, Integer.MAX_VALUE);
-                    else if(getPlayType(board22) == PlayType.X_BLOCKING_PLAY)
-                        evalX.put(board22, 999999999);
-                    else
-                        evalX.put(board22, minimax(board22, 0, true));
+                        evalX.put(board22, fiveHead(board22, true));
                 }
                 if(playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
                     xPlayer.executePlayerLegalPlay(getBoardWithHighestEvaluation(evalX));
