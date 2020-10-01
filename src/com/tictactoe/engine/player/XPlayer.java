@@ -2,6 +2,7 @@ package com.tictactoe.engine.player;
 
 
 import com.tictactoe.engine.board.Board;
+import com.tictactoe.engine.gui.Settings;
 
 import java.util.Collection;
 
@@ -10,14 +11,15 @@ import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
 import static com.tictactoe.engine.board.BoardUtils.playTank;
 import static com.tictactoe.engine.board.Tile.EMPTY_TILE_CACHE;
 import static com.tictactoe.engine.board.Tile.X_BIASED_TILE_CACHE;
+import static com.tictactoe.engine.gui.LayOut.settings;
 import static com.tictactoe.engine.play.Play.executePlay;
 
 public class XPlayer implements Player {
     private final PlayerType xPlayerType;
-    private static final XPlayer INSTANCE = new XPlayer();
+    private static final XPlayer INSTANCE = new XPlayer(PlayerType.HUMAN);
 
-    private XPlayer(){
-        this.xPlayerType = setPlayerType();
+    private XPlayer(final PlayerType playerType){
+        this.xPlayerType = setPlayerType(playerType);
     }
     public static XPlayer getInstance() { return INSTANCE; }
     @Override
@@ -38,9 +40,8 @@ public class XPlayer implements Player {
         return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0));
     }
     @Override
-    public  PlayerType setPlayerType() {
-        //TODO to be assigned through gui radio button
-        return PlayerType.AI;
+    public  PlayerType setPlayerType(final PlayerType playerType) {
+        return playerType;
     }
     @Override
     public PlayerType getPlayerType() { return this.xPlayerType; }
