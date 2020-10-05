@@ -19,9 +19,9 @@ public class FiveHead {
         else if(getPlayType(board) == O_WINNING_PLAY && !maximizing)
             brain = -1999999999;
         else if(getPlayType(board) == X_BLOCKING_PLAY && maximizing)
-            brain = 10000;
+            brain = 100000;
         else if(getPlayType(board) == O_BLOCKING_PLAY && !maximizing)
-            brain = -10000;
+            brain = -100000;
         else if(getPlayType(board) == X_PREFERRED_PLAY && maximizing)
             brain = 8000;
         else if(getPlayType(board) == O_PREFERRED_PLAY && !maximizing)

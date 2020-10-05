@@ -5,6 +5,7 @@ import com.tictactoe.engine.board.Board;
 import com.tictactoe.engine.board.Line;
 import com.tictactoe.engine.board.Tile;
 
+import static com.tictactoe.engine.board.BoardUtils.getPlayedTileAlliance;
 import static com.tictactoe.engine.board.BoardUtils.playTank;
 
 public enum PlayType {
@@ -40,9 +41,11 @@ public enum PlayType {
                 countO++;
             else if (line.isLineTrifectaX())
                 countX++;
-            else if (line.isXBlockingLine())
+            else if (line.isXBlockingLine() &&
+                    getPlayedTileAlliance(board, playTank.get(playTank.size() - 1)) == Alliance.X)
                 countXBlock++;
-            else if (line.isOBlockingLine())
+            else if (line.isOBlockingLine() &&
+                    getPlayedTileAlliance(board, playTank.get(playTank.size() - 1)) == Alliance.O)
                 countOBlock++;
         }
 
@@ -55,15 +58,15 @@ public enum PlayType {
         else if(countOBlock > countOOriginalBlock)
             return PlayType.O_BLOCKING_PLAY;
 
-        for(final Tile tile : board.getBoardTiles()){
-            if(tile.getTileCoordX() == 1 &&
-               tile.getTileCoordY() == 1 &&
-               tile.isTileBiased()){
-                if(tile.getAlliance() == Alliance.X)
+
+        for(final Tile tile : board.getXBiasedTiles()) {
+                if(tile.getTileCoordX() == 1 && tile.getTileCoordY() == 1)
                     return PlayType.X_PREFERRED_PLAY;
-                else if(tile.getAlliance() == Alliance.O)
-                    return PlayType.O_PREFERRED_PLAY;
-            }
+        }
+
+        for(final Tile tile : board.getOBiasedTiles()) {
+            if(tile.getTileCoordX() == 1 && tile.getTileCoordY() == 1)
+                return PlayType.O_PREFERRED_PLAY;
         }
         return PlayType.NORMAL_PLAY;
     }

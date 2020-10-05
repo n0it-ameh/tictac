@@ -28,8 +28,8 @@ public class JHumanVsAi {
         Board board = Board.newBoard(EMPTY_TILE_CACHE);
         playTank.add(board);
         allianceTank.add(null);
-        final XPlayer xPlayer = XPlayer.getInstance();
-        final OPlayer oPlayer = OPlayer.getInstance();
+        final XPlayer xPlayer = XPlayer.getHumanInstance();
+        final OPlayer oPlayer = OPlayer.getAiInstance();
         System.out.println(board);
         System.out.println(board.getGameStatus());
 

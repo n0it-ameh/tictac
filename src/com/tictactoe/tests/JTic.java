@@ -1,6 +1,7 @@
 package com.tictactoe.tests;
 
 
+import com.tictactoe.engine.Alliance;
 import com.tictactoe.engine.board.Board;
 import com.tictactoe.engine.play.GameStatus;
 
@@ -23,10 +24,10 @@ public class JTic {
             char alliance = input.charAt(0);
             if (alliance == 'x') {
                 executePlay(playTank.get(playTank.size() - 1), getX(coord), getY(coord),
-                        X_BIASED_TILE_CACHE.get(getX(coord), getY(coord)));
+                        X_BIASED_TILE_CACHE.get(getX(coord), getY(coord)), Alliance.X);
             } else {
                 executePlay(playTank.get(playTank.size() - 1), getX(coord), getY(coord),
-                        O_BIASED_TILE_CACHE.get(getX(coord), getY(coord)));
+                        O_BIASED_TILE_CACHE.get(getX(coord), getY(coord)), Alliance.O);
             }
         }
         while (playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING);

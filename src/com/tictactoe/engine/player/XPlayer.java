@@ -1,9 +1,8 @@
 package com.tictactoe.engine.player;
 
 
+import com.tictactoe.engine.Alliance;
 import com.tictactoe.engine.board.Board;
-import com.tictactoe.engine.gui.Settings;
-
 import java.util.Collection;
 
 import static com.tictactoe.engine.board.Board.calculateOLegalPlays;
@@ -11,17 +10,18 @@ import static com.tictactoe.engine.board.Board.calculateXLegalPlays;
 import static com.tictactoe.engine.board.BoardUtils.playTank;
 import static com.tictactoe.engine.board.Tile.EMPTY_TILE_CACHE;
 import static com.tictactoe.engine.board.Tile.X_BIASED_TILE_CACHE;
-import static com.tictactoe.engine.gui.LayOut.settings;
 import static com.tictactoe.engine.play.Play.executePlay;
 
 public class XPlayer implements Player {
     private final PlayerType xPlayerType;
-    private static final XPlayer INSTANCE = new XPlayer(PlayerType.HUMAN);
+    private static final XPlayer HUMAN_INSTANCE = new XPlayer(PlayerType.HUMAN);
+    private static final XPlayer AI_INSTANCE = new XPlayer(PlayerType.AI);
 
     private XPlayer(final PlayerType playerType){
-        this.xPlayerType = setPlayerType(playerType);
+        xPlayerType = playerType;
     }
-    public static XPlayer getInstance() { return INSTANCE; }
+    public static XPlayer getHumanInstance() { return HUMAN_INSTANCE; }
+    public static XPlayer getAiInstance() { return AI_INSTANCE; }
     @Override
     public Board getCurrentBoard(){ return playTank.get(playTank.size() - 1); }
     @Override
@@ -33,16 +33,12 @@ public class XPlayer implements Player {
     @Override
     public Board executePlayerPlay(final int tileCoordX, final int tileCoordY) {
         return executePlay(getCurrentBoard(), tileCoordX, tileCoordY,
-                            X_BIASED_TILE_CACHE.get(tileCoordX, tileCoordY));
+                            X_BIASED_TILE_CACHE.get(tileCoordX, tileCoordY), Alliance.X);
     }
     @Override
     public Board executePlayerLegalPlay(final Board legalPlay) {
-        return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0));
+        return executePlay(legalPlay, 0,0,EMPTY_TILE_CACHE.get(0,0), Alliance.X);
     }
     @Override
-    public  PlayerType setPlayerType(final PlayerType playerType) {
-        return playerType;
-    }
-    @Override
-    public PlayerType getPlayerType() { return this.xPlayerType; }
+    public PlayerType getPlayerType() { return xPlayerType; }
 }

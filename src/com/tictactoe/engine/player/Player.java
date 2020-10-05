@@ -6,12 +6,11 @@ import java.util.Collection;
 
 public interface Player {
 
-    public abstract Board getPlayerBoard();
-    public abstract Collection<Board> getPlayerLegalPlays();
-    public abstract Collection<Board> getOpponentLegalPlays();
-    public abstract Board executePlayerPlay(final int tileCoordX, final int tileCoordY);
-    public abstract Board executePlayerLegalPlay(final Board legalPlay);
-    public abstract Board getCurrentBoard();
-    public abstract PlayerType setPlayerType(final PlayerType playerType);
-    public abstract PlayerType getPlayerType();
+      Board getPlayerBoard();
+      Collection<Board> getPlayerLegalPlays();
+      Collection<Board> getOpponentLegalPlays();
+      Board executePlayerPlay(final int tileCoordX, final int tileCoordY);
+      Board executePlayerLegalPlay(final Board legalPlay);
+      Board getCurrentBoard();
+      PlayerType getPlayerType();
 }

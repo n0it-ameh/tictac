@@ -68,9 +68,8 @@ public class BoardUtils {
     }
 
     public static Board getBoardWithHighestEvaluation(final Map<Board, Integer> map){
-        final Map<Board, Integer> map1 = map;
         int maxValueInMap=(Collections.max(map.values()));
-        for (Map.Entry<Board, Integer> entry : map1.entrySet()) {
+        for (Map.Entry<Board, Integer> entry : map.entrySet()) {
             if (entry.getValue() == maxValueInMap) {
                 return entry.getKey();
             }
@@ -79,9 +78,8 @@ public class BoardUtils {
     }
 
     public static Board getBoardWithLowestEvaluation(final Map<Board, Integer> map){
-        final Map<Board, Integer> map2 = map;
         int minValueInMap = (Collections.min(map.values()));
-        for(Map.Entry<Board, Integer> entry : map2.entrySet()) {
+        for(Map.Entry<Board, Integer> entry : map.entrySet()) {
             if(entry.getValue() == minValueInMap) {
                 return entry.getKey();
             }
@@ -113,6 +111,24 @@ public class BoardUtils {
         }
     }
 
+    public static int countOBlock$ (final Board board) {
+        int count = 0;
+        for(final Line line : board.getBoardLines()){
+            if(line.isOBlockingLine())
+                count++;
+        }
+        return count;
+    }
 
 
+    public static Alliance getPlayedTileAlliance(final Board newBoard, final Board originalBoard) {
+        Alliance diff = null;
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                if(newBoard.get(i, j) != originalBoard.get(i, j))
+                    diff = newBoard.get(i, j).getAlliance();
+            }
+        }
+        return diff;
+    }
 }

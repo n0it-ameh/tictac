@@ -23,9 +23,9 @@ public class Board {
     private Board(final Table<Integer, Integer, Tile> finalTable) {
         this.board = createBoard(finalTable);
         this.boardTiles = registerBoardTiles();
-        this.emptyTiles = calculateEmptyTiles(finalTable);
-        this.xBiasedTiles = calculateXBiasedTiles(finalTable);
-        this.oBiasedTiles = calculateOBiasedTiles(finalTable);
+        this.emptyTiles = calculateEmptyTiles(board);
+        this.xBiasedTiles = calculateXBiasedTiles(board);
+        this.oBiasedTiles = calculateOBiasedTiles(board);
         this.boardLines = calculateBoardLines();
         this.boardStatus = calculateGameStatus();
 
@@ -186,6 +186,7 @@ public class Board {
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 final Tile tile = table.get(i, j);
+                assert tile != null;
                 if(!tile.isTileBiased()){
                     emptyTiles.add(tile);
                 }
@@ -199,6 +200,7 @@ public class Board {
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 final Tile tile = table.get(i, j);
+                assert tile != null;
                 if(tile.isTileBiased()){
                     if(tile.getAlliance() == Alliance.X){
                         xTiles.add(tile);
@@ -215,6 +217,7 @@ public class Board {
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 final Tile tile = table.get(i, j);
+                assert tile != null;
                 if(tile.isTileBiased()){
                     if(tile.getAlliance() == Alliance.O){
                         oTiles.add(tile);
@@ -231,7 +234,8 @@ public class Board {
         final StringBuilder builder = new StringBuilder();
         for(int i=0; i < 3; i++){
             for(int j=0; j < 3; j++){
-                final String tileText = this.board.get(i, j).toString();
+                final String tileText =
+                        java.util.Objects.requireNonNull(this.board.get(i, j)).toString();
                 builder.append(String.format("%3s", tileText));
                 if((j + 1) % 3 == 0){
                     builder.append("\n");

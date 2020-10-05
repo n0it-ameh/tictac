@@ -24,8 +24,8 @@ public class JaiVSai {
         Board board = Board.newBoard(EMPTY_TILE_CACHE);
         playTank.add(board);
         allianceTank.add(null);
-        final XPlayer xPlayer = XPlayer.getInstance();
-        final OPlayer oPlayer = OPlayer.getInstance();
+        final XPlayer xPlayer = XPlayer.getAiInstance();
+        final OPlayer oPlayer = OPlayer.getAiInstance();
 
         if(xPlayer.getPlayerType() == PlayerType.AI && oPlayer.getPlayerType() == PlayerType.AI) {
             while (playTank.get(playTank.size() - 1).getGameStatus() == GameStatus.GAME_ON_GOING) {
