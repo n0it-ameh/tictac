@@ -1,10 +1,9 @@
 package com.tictactoe.engine.ignite;
 
-import com.tictactoe.engine.gui.LayOut;
+import com.tictactoe.engine.gui.Settings;
 
 public class StartingPoint {
     public static void main(String[] args) {
-        LayOut layOut = new LayOut();
-        layOut.setVisible(true);
+        new Settings().setVisible(true);
     }
 }
